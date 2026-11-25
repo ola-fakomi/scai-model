@@ -1,36 +1,68 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SCAI – STEM Connect Attendee Index
 
-## Getting Started
+Submission for the Technical Assistant role at Payaza Africa.
 
-First, run the development server:
+SCAI scores every event attendee from 0 to 100 across five weighted pillars:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+SCAI = 0.10P + 0.15E + 0.25N + 0.30M + 0.20F
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+P: Presence · E: Engagement · N: Networking · M: Matching (30%, largest) · F: Follow-through
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Local setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm install
+npm run dev        # http://localhost:3000
+npm test           # run 23 unit tests
+npm run build      # production build
+```
 
-## Learn More
+## Routes
 
-To learn more about Next.js, take a look at the following resources:
+| Route | Description |
+|---|---|
+| `/` | Redirects to `/brief` |
+| `/brief` | Case study – Brief tab |
+| `/solution` | Case study – Solution tab |
+| `/prototype` | Case study – Prototype tab |
+| `/demo` | Interactive demo (redirects to attendee view) |
+| `/demo/attendee` | Attendee phone view (use "Act as" picker) |
+| `/demo/staff` | Staff tools: door, segments, note-taker, usher |
+| `/demo/organizer` | Organizer scoreboard |
+| `/deck` | 10-slide PDF pitch deck |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+lib/
+  types.ts         Domain types and config constants
+  scoring.ts       Pure scoring engine (dr, percentile, SCAI, KPIs, betweenness)
+  scoring.test.ts  Vitest unit tests (23 tests)
+  tags.ts          Tag assignment with mixing rule
+  seed.ts          Seeded sample data (mulberry32, seed 20261122)
+  store.ts         Zustand demo store (persisted to localStorage)
+  luma.ts          LumaClient interface + MockLumaClient
+components/
+  TabLayout.tsx    Site header + tabs + Download PDF button
+  Diagram1.tsx     Event → pillar data flow diagram
+  Diagram2.tsx     Deployment timeline diagram
+  demo/DemoShell.tsx  Demo controls: role switcher, simulate, reset
+```
 
-## Deploy on Vercel
+## Deploy to Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+npx vercel --prod
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No environment variables needed (Tier 1 — browser-only).
+
+## Tech stack
+
+- Next.js 16 (App Router) + TypeScript
+- Tailwind CSS v4
+- Zustand (persisted localStorage state)
+- qrcode.react, Recharts, Lucide icons
+- Vitest unit tests

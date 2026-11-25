@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
+/* ─── Tailwind token map (dynamic — values come from CSS vars) ───── */
+@theme {
+  --color-background:          var(--background);
+  --color-foreground:          var(--foreground);
+  --color-card:                var(--card);
+  --color-card-foreground:     var(--card-foreground);
+  --color-popover:             var(--card);
+  --color-popover-foreground:  var(--card-foreground);
+  --color-primary:             var(--accent);
+  --color-primary-foreground:  var(--accent-foreground);
+  --color-secondary:           var(--surface-muted);
+  --color-secondary-foreground:var(--foreground);
+  --color-muted:               var(--surface-muted);
+  --color-muted-foreground:    var(--text-muted);
+  --color-accent:              var(--accent);
+  --color-accent-foreground:   var(--accent-foreground);
+  --color-destructive:         var(--danger);
+  --color-destructive-foreground: var(--accent-foreground);
+  --color-border:              var(--border);
+  --color-input:               var(--border-strong);
+  --color-ring:                var(--accent);
+  --color-success:             var(--success);
+  --color-warning:             var(--warning);
+
+  /* Monospaced font for tags like 1D, 7C */
+  --font-mono: var(--font-jetbrains), ui-monospace, 'Cascadia Code', monospace;
+
+  --radius: 0.875rem; /* 14 px — brief spec for cards */
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   LIGHT THEME  (default — case study pages)
+   ═══════════════════════════════════════════════════════════════════ */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background:    hsl(56 20% 95%);    /* #F5F4EE warm ivory  */
+  --card:          hsl(0 0% 100%);     /* #FFFFFF white       */
+  --surface-muted: hsl(50 12% 92%);    /* #EFEDE5             */
+  --border:        hsl(50 15% 86%);    /* #E4E1D6             */
+  --border-strong: hsl(50 12% 80%);    /* #D2CEC1             */
+  --foreground:    hsl(40 5% 11%);     /* #1F1E1C             */
+  --card-foreground: hsl(40 5% 11%);
+  --text-muted:    hsl(45 5% 40%);     /* #6B6960             */
+  --text-faint:    hsl(50 5% 58%);     /* #9A978C             */
+  --accent:        hsl(15 56% 52%);    /* #C96442 terracotta  */
+  --accent-hover:  hsl(15 59% 44%);    /* #B4552F             */
+  --accent-soft:   hsl(15 55% 92%);    /* #F6E3DA             */
+  --accent-foreground: hsl(0 0% 100%);
+  --success:       hsl(116 25% 39%);   /* #4F7A4A             */
+  --success-soft:  hsl(110 20% 91%);   /* #E6EFE2             */
+  --success-foreground: hsl(116 25% 39%);
+  --warning:       hsl(36 72% 42%);    /* #B7791F             */
+  --warning-soft:  hsl(36 60% 90%);    /* #F7EBD3             */
+  --warning-foreground: hsl(36 72% 42%);
+  --danger:        hsl(10 65% 45%);    /* #B3412E             */
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ═══════════════════════════════════════════════════════════════════
+   BASE STYLES
+   ═══════════════════════════════════════════════════════════════════ */
+html { scroll-behavior: smooth; }
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  border-color: var(--border);
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Geist', 'Helvetica Neue', system-ui, sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* ─── Display typography ─────────────────────────────────────────── */
+.font-display {
+  font-family: 'Glegoo', sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+
+/* ─── Glegoo bold for all headings ─────────────────────────────── */
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Glegoo', sans-serif;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700 !important;
+}
+
+/* ─── Mono for data tags ─────────────────────────────────────────── */
+.tag-mono {
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+}
+
+/* ─── Formula callout ───────────────────────────────────────────── */
+.formula-block {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.5rem;
+  border-radius: 0 10px 10px 0;
+  font-family: var(--font-jetbrains), ui-monospace, monospace;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--foreground);
+  margin: 1.5rem 0;
+  letter-spacing: 0.01em;
+}
+
+/* ─── Noise texture (subtle grain) ─────────────────────────────── */
+.noise-bg {
+  position: relative;
+}
+.noise-bg::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ─── Page-enter animations ─────────────────────────────────────── */
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-enter {
+  animation: fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.delay-1 { animation-delay: 0.06s; }
+.delay-2 { animation-delay: 0.12s; }
+.delay-3 { animation-delay: 0.18s; }
+.delay-4 { animation-delay: 0.24s; }
+.delay-5 { animation-delay: 0.30s; }
+
+/* ─── Score reveal ──────────────────────────────────────────────── */
+@keyframes score-pop {
+  from { opacity: 0; transform: scale(0.85); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.score-reveal {
+  animation: score-pop 0.45s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+}
+
+/* ─── Range input ───────────────────────────────────────────────── */
+input[type="range"] { accent-color: var(--accent); }
+
+/* ─── Scrollable tables ─────────────────────────────────────────── */
+.table-scroll { overflow-x: auto; }
+
+/* ─── Scrollbars ────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 3px; }
