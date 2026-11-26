@@ -9,10 +9,7 @@ export default function Diagram1() {
 
   return (
     <div className="my-6">
-      <p className="text-[11px] font-[600] text-muted-foreground uppercase tracking-widest mb-3">
-        Every event segment feeds one pillar; five pillars make one score
-      </p>
-      <div className="border border-border rounded-lg overflow-hidden">
+<div className="border border-border rounded-lg overflow-hidden">
         <div className="grid grid-cols-[1fr_28px_1fr] bg-secondary/60 px-4 py-2 border-b border-border">
           <span className="text-[11px] font-[600] text-muted-foreground uppercase tracking-wider">Event segment & data source</span>
           <span />
