@@ -156,10 +156,10 @@ export default function TabLayout({
           {/* Watch demo */}
           <div className="px-3 py-4 border-t border-border">
             <Button variant="outline" size="sm" asChild className="w-full gap-1.5">
-              <Link href="/prototype/attendee">
+              <a href="https://www.loom.com/share/0f5c7cfb0f9d455e8d292491d34440a1" target="_blank" rel="noopener noreferrer">
                 <Icon icon="solar:play-linear" className="h-3 w-3" />
                 Watch demo
-              </Link>
+              </a>
             </Button>
           </div>
         </aside>
@@ -204,15 +204,17 @@ export default function TabLayout({
           })}
 
           {/* Watch demo — play button */}
-          <Link
-            href="/prototype/attendee"
+          <a
+            href="https://www.loom.com/share/0f5c7cfb0f9d455e8d292491d34440a1"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex-1 flex flex-col items-center justify-center gap-0.5"
           >
             <div className="w-9 h-9 rounded-full bg-primary flex items-center justify-center shadow-sm">
               <Icon icon="solar:play-linear" className="h-4 w-4 text-white translate-x-px" />
             </div>
             <span className="text-[10px] font-[500] text-primary">Watch</span>
-          </Link>
+          </a>
         </div>
       </nav>
     </div>
